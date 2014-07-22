@@ -1,7 +1,6 @@
 picwwall
 ========
 
-/*	图片墙效果
  *	需要2个保留ClassName: sketitems , imgitems
  *	单元格 ClassName：picitem ;
  *	@param:
