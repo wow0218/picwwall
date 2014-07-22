@@ -1,0 +1,213 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<title>海尔冰吧</title>
+<link href="images/css.css" rel="stylesheet" type="text/css" />
+<script src="http://go.163.com/css/jquery-1.8.3.min.js" type="text/javascript" ></script>
+<script type="text/javascript" >
+	try{
+		document.domain = "163.com"; 
+	}catch(e){}
+</script>
+</head>
+<body>
+<div class="page" id="page_4">
+    <img class="pagebg" src="images/bg2.jpg" width="1980" height="1050" />
+    <div class="innerview">
+        <div id="picwall">
+            <!--<div class="picrows">
+                <span class="picitem picitem1"><img src="images/pic/sp0.jpg" /></span>
+                <span class="picitem picitem1"><img src="images/pic/sp0.jpg" /></span>
+                <span class="picitem picitem1"><img src="images/pic/sp0.jpg" /></span>
+                <span class="picitem picitem2"><img src="images/pic/sp0.jpg" /></span>
+                <span class="picitem picitem2"><img src="images/pic/sp0.jpg" /></span>
+                <span class="picitem picitem2 last"><img src="images/pic/sp0.jpg" /></span>
+            </div>-->
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(function(){
+	//图片墙
+	var picwall=new PicWall("#picwall");
+	picwall.init();
+});
+
+/*	图片墙效果
+ *	需要2个保留ClassName: sketitems , imgitems
+ *	单元格 ClassName：picitem ;
+ *	@param:
+ *		rootid	: 	图片墙容器 例如 "#picwall"
+ *		itemW	: 	每单元格 宽度
+ *		itemH	： 	每单元格 高度
+ *		space 	： 	单元格 间隔
+ *	用法举例：
+ *		var picwall=new PicWall("#picwall");
+ *		picwall.init();
+ */
+function PicWall(rootid,itemW,itemH,space){
+	var _=this;
+	var $root=$(rootid);
+	var rowsClass="picrows";
+	var itemClass="picitem";
+	itemW = itemW || 148; //单元 宽度
+	itemH = itemH || 148; //单元 高度
+	space =space || 14;	  //单元 间隔
+	var during=300;
+	var rows, //显示行数
+		cols; //显示列数
+	//图片地址
+	_.assets={
+		"layout":[
+			[1,1,1,0,1,1],
+			[0,1,0,1,0,1],
+			[1,0,1,0,1,0]
+		],
+		"images":[
+			{"small":"images/pic/sp0.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp1.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp2.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp3.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp4.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp5.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp6.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp7.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp8.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp9.jpg","large":"images/pic/pic8.jpg"},
+			{"small":"images/pic/sp10.jpg","large":"images/pic/pic8.jpg"},
+		],
+		"sketches":[
+			{"small":"images/pic/isp0.jpg"},
+			{"small":"images/pic/isp1.jpg"},
+			{"small":"images/pic/isp2.jpg"},
+			{"small":"images/pic/isp3.jpg"},
+			{"small":"images/pic/isp4.jpg"},
+			{"small":"images/pic/isp5.jpg"},
+			{"small":"images/pic/isp6.jpg"},
+		]
+	};
+	//图片 index renderDom 用
+	var curimg=0,cursket=0;
+	// 写入HTML文件 对应 CSS 样式 在 CSS 中 
+	// 不在 此处 写入CSS
+	_.renderDom=function(){
+		rows=_.assets.layout.length;
+		cols=_.assets.layout[0].length;
+		var html='';
+		for(var i=0;i<rows;i++){
+			html+='<div class="'+rowsClass+'">';
+			for(var j=0;j<cols;j++){
+				var lastitem=j==cols-1?"last":"";
+				if(_.assets.layout[i][j]==0){
+					html+='<span class="'+itemClass+' sketitems '+lastitem+'"><img src="'+_.assets.sketches[cursket].small+'" width="100%" /></span>';
+					cursket++;
+				}else{
+					html+='<span class="'+itemClass+' imgitems '+lastitem+'"><img src="'+_.assets.images[curimg].small+'" width="100%" /></span>';
+					curimg++;
+				}
+			}
+			html+='</div>';
+		}
+		$root.html(html);
+	};
+	function imgLoader(img,callback){
+		var obj=new Image();
+		obj.onload=callback;
+		obj.src=img;
+	}
+	_.animatePic=function(r,c,imgc,callback){
+		//大图 src
+		var imgsrc=_.assets.images[imgc].large;
+		//加载图片
+		//imgLoader(imgsrc,function(){
+			var img=imgsrc,
+				w=310,
+				h=472;
+			//var that=this;
+			var $thisitem=$("."+itemClass).eq(r*cols+c);
+			//大图占位:
+			var zwRows=Math.ceil(h/(itemH+space));
+			var zwCols=Math.ceil(w/(itemW+space));
+			//大图显示起始位:
+			var posRows= r+zwRows > rows ? (r-(zwRows>>1)+zwRows > rows ? rows-zwRows :r-(zwRows>>1)) : r;
+			var posCols=c+zwCols>cols ? (c-(zwCols>>1)+zwCols > cols ? cols-zwCols :c-(zwCols>>1)) : c;
+			//切换大图
+			$thisitem.css({"z-index":2}).find("img").attr("src",img);
+			//其他项目动画
+			for(var i=0;i<zwRows;i++){
+				var $rowitem=$("."+rowsClass).eq(posRows+i).find("."+itemClass);
+				//左边项目左移
+				if(posCols>0){
+					$rowitem.eq(0).stop().animate({"margin-left":(posCols-c-( posRows+i != r &&  c+zwCols>cols? (zwCols>>1):0))*(itemW+space),"margin-top":0,"width":itemW,"height":itemH},during);
+				}
+				//右边项目右移
+				if(posRows+i != r){ //当前项右边 自动右移 不需要处理
+					$rowitem.eq(c+zwCols>cols ?posCols+zwCols:posCols).stop().animate({"margin-left":zwCols*(itemW+space),"margin-top":0,"width":itemW,"height":itemH},during);
+				}
+			}
+			//显示动画
+			$thisitem.stop().animate({"margin-top":(posRows-r)*(itemH+space),"margin-left":0,"width":w,"height":h},during);//,"margin-left":(posCols-c)*(itemW+space)
+			if(typeof(callback)=='function'){
+				callback(r,c,imgc);
+			}
+		//});
+	};
+	_.enventInit=function(){
+		$("."+itemClass).bind("mouseenter",_.mouseoverHandler);
+		$("."+itemClass).bind("mouseleave",_.mouseleaveHandler);
+		$("."+itemClass).bind("click",_.clickHandler);
+	};
+	_.mouseoverHandler=function(e){
+		if($(this).hasClass("sketitems")){return;} //固定图片 不处理
+		var r=$("."+rowsClass).index($(this).parents("."+rowsClass));
+		var c=$(this).parents("."+rowsClass).find("."+itemClass).index(this);
+		var imgc=$(".imgitems").index(this);
+		_.animatePic(r,c,imgc,_.mouseoverCallback);
+	};
+	_.mouseleaveHandler=function(e){
+		if($(this).hasClass("sketitems")){return;} //固定图片 不处理
+		var r=$("."+rowsClass).index($(this).parents("."+rowsClass));
+		var c=$(this).parents("."+rowsClass).find("."+itemClass).index(this);
+		var imgc=$(".imgitems").index(this);
+		//切换图片到小图
+		$(this).find("img").attr("src",_.assets.images[imgc].small);
+		//其他图片回复原位
+		$("."+itemClass).each(function(i,e){
+			var mright= ($(this).hasClass("last")) ? 0: space;
+			$(this).stop().css({"z-index":1}).animate({"margin-left":0,"margin-top":0,"width":itemW,"height":itemH},during);
+		});
+	};
+	_.clickHandler=function(e){
+		//没有实现。如果要实现，参考 mouseoverHandler();
+
+		//if(typeof(_.clickCallback)=='function'){
+		//	_.clickCallback(r,c);
+		//}
+	};
+
+	_.mouseoverCallback=function(r,c,imgc){
+		//mouseover 处理 ,请覆盖
+		// 如果需要移除,请使用 _.mouseoverCallback=null;
+	};
+	_.clickCallback=function(r,c,imgc){
+		//click 处理 ,请覆盖
+		// 如果需要移除,请使用 _.clickCallback=null;
+	};
+	_.init=function(){
+		_.renderDom();
+		_.enventInit(); //必须 renderDom() 后调用.
+		return _;
+	};
+}
+</script> 
+
+<script src="http://analytics.163.com/ntes.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    _ntes_nacc = "minisites"; //站点ID。
+    neteaseTracker();
+</script>
+</body>
+</html>

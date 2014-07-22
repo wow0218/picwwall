@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td { margin: 0; padding: 0; }
+img { border: 0 none; vertical-align: top; }
+ul, li { list-style-type: none; }					
+div{position:relative}					/*6月14日更新此条，为所有div元素添加默认的position属性为relative，在该属性下，div元素默认拥有top、left等绝对定位属性和margin等相对定位属性（暂时这么解释吧）*/
+h1, h2, h3, h4, h5, h6 { font-size: 14px; }
+body, input, select, button, textarea { font-size: 12px; font-family: Tahoma, Geneva, sans-serif; }
+button { cursor: pointer; }
+i, em, cite { font-style: normal; }
+body { background: #fff; color: #363636; line-height: 1.2; }
+a, a:link {text-decoration: none; color:#2d2d2d}
+a:visited {  }
+a:focus { outline: none; }
+.fixed:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+.fixed { display: block; min-height: 1%; }
+*html .fixed { height: 1%; }
+.clear { display: block!important; float: none!important; clear: both; overflow: hidden; width: auto!important; height: 0!important; margin: 0 auto!important; padding: 0!important; font-size: 0; line-height: 0; }
+.fl, .fr { display: inline; float: left; }
+.fr { float: right; }
+input{height:auto; outline:none; vertical-align:bottom;+vertical-align:middle !important; _vertical-align:middle; line-height:normal}
+textarea {resize: none;} /*6月14日更新，针对webkit核心的浏览器——Chrome(google浏览器),Safari(苹果浏览器)中textare可调整大小的问题定义. 取消拖动调整大小*/
+textarea:focus {outline: none;} /*6月14日更新. textarea的聚焦时现在默认边框颜色不变*/
+area{outline:none;cursor:pointer;}
+
+body{font-family:"微软雅黑", "宋体", "新宋体", Arial, "times New Roman";background-color:#000;width:100%;height:100%;}
+body a{text-decoration:none;}
+a:hover{text-decoration:none;}
+img{border:0 none;}
+.page{position:absolute;width:100%;height:100%;left:50%;top:0px;overflow: hidden;}
+.innerview{position:absolute;width:1280px;height:600px;left:50%;top:50%;margin:-300px auto auto -640px;}
+.pagebg{position:absolute;left:50%;top:50%;margin-left:-890px;margin-top:-525px;}
+
+#page_4{left:0%;}
+#page_4 .innerview{width: 988px;height: 502px;margin-left: -494px;margin-top: -251px;background: url(blank.png) 0 0 repeat;}
+#picwall{position:absolute;left:50%;top:50%;width:958px;height:472px;margin-left:-479px;margin-top:-236px;overflow: hidden;}
+.picrows{width: 200%;height:162px; position: relative;overflow: visible;font-size: 0px;}
+.picitem{position: relative;width: 148px;height: 148px;margin-right: 14px;overflow: hidden;z-index: 1; display: inline-block;vertical-align: top; *display: inline;*zoom:1;}
+.last{margin: 0px;}
