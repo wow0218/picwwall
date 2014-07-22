@@ -31,7 +31,7 @@ img{border:0 none;}
 .innerview{position:absolute;width:1280px;height:600px;left:50%;top:50%;margin:-300px auto auto -640px;}
 .pagebg{position:absolute;left:50%;top:50%;margin-left:-890px;margin-top:-525px;}
 
-#page_4{left:0%;}
+#page_4{left:0%;background: #999999;}
 #page_4 .innerview{width: 988px;height: 502px;margin-left: -494px;margin-top: -251px;background: url(blank.png) 0 0 repeat;}
 #picwall{position:absolute;left:50%;top:50%;width:958px;height:472px;margin-left:-479px;margin-top:-236px;overflow: hidden;}
 .picrows{width: 200%;height:162px; position: relative;overflow: visible;font-size: 0px;}
