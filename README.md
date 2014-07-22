@@ -4,8 +4,8 @@
 
 详细的代码 在 index.html中。
 
-
-picwall
+========
+Picwall JS 说明
 ========
 
  *	需要2个保留ClassName: sketitems , imgitems
@@ -15,6 +15,9 @@ picwall
  *		itemW	: 	每单元格 宽度
  *		itemH	： 	每单元格 高度
  *		space 	： 	单元格 间隔
- *	用法举例：
+
+========
+ 用法举例
+========
  *		var picwall=new PicWall("#picwall");
  *		picwall.init();
