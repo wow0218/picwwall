@@ -1,4 +1,11 @@
-picwwall
+说明
+=======
+一个简单的图片墙效果，Javascript 简单的实现图片在限定范围内的Mouse切换效果。
+
+详细的代码 在 index.html中。
+
+
+picwall
 ========
 
  *	需要2个保留ClassName: sketitems , imgitems
