@@ -21,3 +21,5 @@ Picwall JS 说明
 ========
  *		var picwall=new PicWall("#picwall");
  *		picwall.init();
+
+效果链接：http://wow0218.github.io/picwwall/
